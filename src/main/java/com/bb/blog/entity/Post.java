@@ -1,23 +1,27 @@
+package com.bb.blog.entity;
+
 @Entity
-@Table(name = "users")
+@Table(name = "posts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String username;
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
     @Column(nullable = false)
-    private String password;
+    private String title;
 
-    private String avatar;
-
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
