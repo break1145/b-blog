@@ -1,6 +1,10 @@
 spring:
   application:
     name: b-blog
+    jwt:
+      expiration: 86400
+      secret: "never_gonna_give_you_up_never_gonna_let_you_down_never_gonna_make_you_cry_and_hurt_you"
+      refresh-threshold: 3600
   datasource:
     url: jdbc:mysql://localhost:3306/b-blog?useSSL=FALSE&allowPublicKeyRetrieval=TRUE
     username: root
