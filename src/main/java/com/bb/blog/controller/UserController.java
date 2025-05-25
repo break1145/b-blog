@@ -1,6 +1,7 @@
 package com.bb.blog.controller;
 
 import com.bb.blog.entity.User;
+import com.bb.blog.entity.response.ApiResponse;
 import com.bb.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,33 +16,57 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<ApiResponse> createUser(@RequestBody User user) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(userService.createUser(user))
+                .build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateUser(id, user));
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(userService.updateUser(id, user))
+                .build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(null)
+                .build());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    public ResponseEntity<ApiResponse> getUserById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(userService.getUserById(id))
+                .build());
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<ApiResponse> getAllUsers() {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(userService.getAllUsers())
+                .build());
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(userService.findByUsername(username));
+    public ResponseEntity<ApiResponse> getUserByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(userService.findByUsername(username))
+                .build());
     }
 }

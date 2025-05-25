@@ -1,9 +1,9 @@
 package com.bb.blog.controller;
 
 import com.bb.blog.entity.Post;
+import com.bb.blog.entity.response.ApiResponse;
 import com.bb.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,42 +15,70 @@ public class PostController {
     private PostService postService;
 
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        return ResponseEntity.ok(postService.createPost(post));
+    public ResponseEntity<ApiResponse> createPost(@RequestBody Post post) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(postService.createPost(post))
+                .build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody Post post) {
-        return ResponseEntity.ok(postService.updatePost(id, post));
+    public ResponseEntity<ApiResponse> updatePost(@PathVariable Integer id, @RequestBody Post post) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(postService.updatePost(id, post))
+                .build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer id) {
         postService.deletePost(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(null)
+                .build());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Integer id) {
-        return ResponseEntity.ok(postService.getPostById(id));
+    public ResponseEntity<ApiResponse> getPostById(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(postService.getPostById(id))
+                .build());
     }
 
     @GetMapping
-    public ResponseEntity<Page<Post>> getAllPosts(Pageable pageable) {
-        return ResponseEntity.ok(postService.getAllPosts(pageable));
+    public ResponseEntity<ApiResponse> getAllPosts(Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(postService.getAllPostsWithDto(pageable))
+                .build());
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<Post>> getPostsByUserId(
+    public ResponseEntity<ApiResponse> getPostsByUserId(
             @PathVariable Integer userId,
             Pageable pageable) {
-        return ResponseEntity.ok(postService.getPostsByUserId(userId, pageable));
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(postService.getPostsByUserIdWithDto(userId, pageable))
+                .build());
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<Post>> searchPosts(
+    public ResponseEntity<ApiResponse> searchPosts(
             @RequestParam String keyword,
             Pageable pageable) {
-        return ResponseEntity.ok(postService.searchPosts(keyword, pageable));
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(postService.searchPostsWithDto(keyword, pageable))
+                .build());
     }
 }

@@ -1,5 +1,6 @@
 package com.bb.blog.service;
 
+import com.bb.blog.entity.dto.PostDto;
 import com.bb.blog.entity.Post;
 import com.bb.blog.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -39,15 +38,39 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException("文章不存在"));
     }
 
-    public Page<Post> getAllPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
+    @Transactional(readOnly = true)
+    public Page<PostDto> getAllPostsWithDto(Pageable pageable) {
+        Page<Post> posts = postRepository.findAll(pageable);
+        return posts.map(post -> {
+            // 在事务中初始化懒加载的user对象
+            post.getUser().getUsername(); // 触发懒加载
+            return PostDto.fromEntity(post);
+        });
     }
 
-    public Page<Post> getPostsByUserId(Integer userId, Pageable pageable) {
-        return postRepository.findByUserId(userId, pageable);
+    @Transactional(readOnly = true)
+    public Page<PostDto> getPostsByUserIdWithDto(Integer userId, Pageable pageable) {
+        Page<Post> posts = postRepository.findByUserId(userId, pageable);
+        return posts.map(post -> {
+            post.getUser().getUsername(); // 触发懒加载
+            return PostDto.fromEntity(post);
+        });
     }
 
-    public Page<Post> searchPosts(String keyword, Pageable pageable) {
-        return postRepository.findByTitleContaining(keyword, pageable);
+    @Transactional(readOnly = true)
+    public Page<PostDto> searchPostsWithDto(String keyword, Pageable pageable) {
+        Page<Post> posts = postRepository.findByTitleContaining(keyword, pageable);
+        return posts.map(post -> {
+            post.getUser().getUsername(); // 触发懒加载
+            return PostDto.fromEntity(post);
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public PostDto getPostByIdWithDto(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("文章不存在"));
+        post.getUser().getUsername(); // 触发懒加载
+        return PostDto.fromEntity(post);
     }
 }
