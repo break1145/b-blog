@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.bb.blog.entity.util.ColumnLabelUtil.buildColumnDefinition;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -57,6 +59,7 @@ public class PostController {
                 .code(200)
                 .message("Success")
                 .data(postService.getAllPostsWithDto(pageable))
+                .column(buildColumnDefinition(Post.class))
                 .build());
     }
 
