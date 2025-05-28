@@ -1,6 +1,7 @@
 package com.bb.blog.controller;
 
 import com.bb.blog.entity.Post;
+import com.bb.blog.entity.dto.PostDto;
 import com.bb.blog.entity.response.ApiResponse;
 import com.bb.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.builder()
                 .code(200)
                 .message("Success")
-                .data(postService.getPostById(id))
+                .data(PostDto.fromEntity(postService.getPostById(id)))
                 .build());
     }
 

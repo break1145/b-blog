@@ -5,6 +5,7 @@ import BlogHomeView from "../views/BlogHomeView.vue";
 import AdminView from "../views/AdminView.vue";
 import MarkdownEditorView from '../views/MarkdownEditorView.vue'
 import ArticleManagement from "../views/admin/ArticleManagement.vue";
+import ArticleDetail from "../components/ArticleDetail.vue";
 
 const routes = [
     { path: '/', component: BlogHomeView },
@@ -19,7 +20,13 @@ const routes = [
         path: '/admin/articles',
         name: 'ArticleManagement',
         component: ArticleManagement
+    },
+    {
+        path: '/article/detail/:id',
+        name: 'ArticleDetail',
+        component: ArticleDetail
     }
+
 ];
 
 const router = createRouter({
