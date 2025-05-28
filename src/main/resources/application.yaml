@@ -3,12 +3,12 @@ spring:
     name: b-blog
     jwt:
       expiration: 86400
-      secret: "never_gonna_give_you_up_never_gonna_let_you_down_never_gonna_make_you_cry_and_hurt_you"
+      secret: ${JWT_SECRET}
       refresh-threshold: 3600
   datasource:
-    url: jdbc:mysql://localhost:3306/b-blog?useSSL=FALSE&allowPublicKeyRetrieval=TRUE
-    username: root
-    password: 123456
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
