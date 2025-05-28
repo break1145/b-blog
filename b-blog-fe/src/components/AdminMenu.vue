@@ -52,6 +52,7 @@ const items = reactive([
     icon: () => h(DashboardOutlined),
     label: '仪表盘',
     title: '仪表盘',
+    onClick: () => router.push('/admin')
   },
   {
     key: 'content',
