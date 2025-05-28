@@ -28,7 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
         <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
         <jjwt.version>0.12.6</jjwt.version>
         <japidocs.version>1.4.4</japidocs.version>
