@@ -18,7 +18,10 @@
           </div>
         </div>
         <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-blue-600 cursor-pointer">{{ post.title }}</h3>
-        <p class="text-gray-600 leading-relaxed mb-4">{{ formatContent(post.content) }}</p>
+        <a-typography-paragraph
+            :ellipsis=" { rows: 2, expandable: true, symbol: 'more' }"
+            :content=" formatContent(post.content) "
+        />
         <div class="flex justify-between items-center pt-4 border-t border-gray-100">
           <div class="flex space-x-4 text-gray-500">
             <button class="flex items-center space-x-1 hover:text-blue-600 transition duration-200">
@@ -34,7 +37,6 @@
               <span>评论</span>
             </button>
           </div>
-          <button class="text-blue-600 hover:text-blue-800 font-medium">阅读更多</button>
         </div>
       </div>
     </div>
@@ -105,6 +107,8 @@ const formatContent = (content) => {
     .replace(/\r\n|\n/g, ' ') // 将换行替换为空格
     .slice(0, 200) + '...' // 限制预览长度
 }
+
+const ellipsis = ref(true);
 
 onMounted(() => fetchPosts())
 </script>
