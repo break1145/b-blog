@@ -29,6 +29,7 @@ public class Post {
     private String title;
 
     @Column(nullable = false, columnDefinition = "TEXT")
+    @ColumnLabel("内容")
     private String content;
 
     @Column(name = "created_at")
